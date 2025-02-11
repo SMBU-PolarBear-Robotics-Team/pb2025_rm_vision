@@ -44,6 +44,7 @@ public:
   Eigen::MatrixXd update(const Eigen::VectorXd & z);
 
 private:
+  // NOLINTBEGIN
   // Process nonlinear vector function
   VecVecFunc f;
   // Observation nonlinear vector function
@@ -79,6 +80,7 @@ private:
   Eigen::VectorXd x_pri;
   // Posteriori state
   Eigen::VectorXd x_post;
+  // NOLINTEND
 };
 
 }  // namespace rm_auto_aim
