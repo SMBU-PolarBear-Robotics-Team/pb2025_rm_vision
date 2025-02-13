@@ -1,16 +1,14 @@
-/**:
+projectile_motion:
   ros__parameters:
+    use_sim_time: false
     projectile:
-      offset_x: 0.0
-      offset_y: 0.0
-      offset_z: 0.0
       offset_pitch: 0.0
       offset_yaw: 0.0
       offset_time: 0.0
-      initial_speed: 0.0
-      target_topic: 'processor/target'
-      gimbal_cmd_topic: 'gimbal_cmd'
-      shoot_data_topic: 'robot_shoot_data'
-      target_frame: 'shooter_link' # gimbal frame_id
-      solver_type: 'gravity' # projectile solve method: gravity / gaf
-      # friction: 0.001 # Air resistance factor if use GAF solver
+      initial_speed: 18.0
+      target_frame: "gimbal_pitch"              # gimbal frame_id
+      target_topic: "tracker/target"
+      gimbal_cmd_topic: "cmd_gimbal_joint"
+      shoot_cmd_topic: "cmd_shoot"
+      solver_type: "gravity"                    # projectile solve method: gravity / gaf
+      # friction: 0.001                         # Air resistance factor if use GAF solver
