@@ -85,7 +85,6 @@ void ProjectileMotionNode::targetCallback(const auto_aim_interfaces::msg::Target
 {
   if (!msg->tracking) {
     publishGimbalCommand(cur_pitch_, cur_yaw_, 0);
-    RCLCPP_INFO(get_logger(), "Pitch: %f, Yaw: %f", cur_pitch_, cur_yaw_);
     RCLCPP_INFO(get_logger(), "Target lost, stop tracking.");
     return;
   }
