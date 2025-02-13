@@ -59,11 +59,11 @@ projectile_motion:
     projectile:
       offset_pitch: 0.0
       offset_yaw: 0.0
-      offset_time: 0.07
+      offset_time: 0.0
       initial_speed: 18.0
       target_frame: "gimbal_pitch"              # gimbal frame_id
       target_topic: "tracker/target"
       gimbal_cmd_topic: "cmd_gimbal_joint"
-      shoot_data_topic: "robot_shoot_data"
+      shoot_cmd_topic: "cmd_shoot"
       solver_type: "gravity"                    # projectile solve method: gravity / gaf
       # friction: 0.001                         # Air resistance factor if use GAF solver
