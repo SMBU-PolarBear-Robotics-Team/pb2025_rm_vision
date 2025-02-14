@@ -3,7 +3,7 @@ hik_camera_ros2_driver:
     camera_info_url: "package://pb2025_vision_bringup/params/reality/camera_info.yaml"
     pixel_format: "BayerRG8"        # Recommended Option: RGB8Packed, BayerRG8
     adc_bit_depth: "Bits_8"         # If using BayerRG8, adc_bit_depth must be Bits_8; otherwise, it can be Bits_8 or Bits_12
-    use_sensor_data_qos: false
+    use_sensor_data_qos: true
     camera_name: "front_industrial_camera"
     # frame_id: "optical_frame"     # If not set, it will be set as <camera_name>_optical_frame
     # camera_topic: "image"         # If not set, it will be set as <camera_name>/image
