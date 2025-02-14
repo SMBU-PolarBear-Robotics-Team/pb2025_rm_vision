@@ -84,8 +84,10 @@ ProjectileMotionNode::ProjectileMotionNode(rclcpp::NodeOptions options)
 void ProjectileMotionNode::targetCallback(const auto_aim_interfaces::msg::Target::SharedPtr msg)
 {
   if (!msg->tracking) {
-    publishGimbalCommand(cur_pitch_, cur_yaw_, 0);
-    RCLCPP_INFO(get_logger(), "Target lost, stop tracking.");
+    // Stop shooting
+    example_interfaces::msg::UInt8 shoot_cmd;
+    shoot_cmd.data = 0;
+    shoot_cmd_publisher_->publish(shoot_cmd);
     return;
   }
 
