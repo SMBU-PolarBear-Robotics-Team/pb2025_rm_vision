@@ -4,12 +4,12 @@ RUN sudo apt update && \
     sudo apt install python3-pip git-lfs -y && \
     sudo pip install vcstool2
 
+# create workspace
 RUN mkdir -p ~/ros_ws && \
     cd ~/ros_ws && \
     git clone --recursive https://github.com/SMBU-PolarBear-Robotics-Team/pb2025_rm_vision.git src/pb2025_rm_vision && \
     vcs import --recursive src < src/pb2025_rm_vision/dependencies.repos
 
-# create workspace
 WORKDIR /root/ros_ws
 
 # install dependencies and some tools
