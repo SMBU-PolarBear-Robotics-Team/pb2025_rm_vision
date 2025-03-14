@@ -191,8 +191,8 @@ void ProjectileMotionNode::calculateTargetPosition(
   target_pitch = -target_pitch;
   target_yaw = std::atan2(target_predict_position.y(), target_predict_position.x());
 
-  hit_yaw = target_yaw;
-  hit_pitch = target_pitch;
+  hit_yaw = target_yaw - cur_yaw_;
+  hit_pitch = target_pitch - cur_pitch_;
 
   publishHitYawMarker(hit_yaw, hit_pitch);
 }
@@ -217,21 +217,18 @@ void ProjectileMotionNode::publishGimbalCommand(double hit_pitch, double hit_yaw
 void ProjectileMotionNode::publishHitYawMarker(double hit_yaw, double hit_pitch)
 {
   visualization_msgs::msg::Marker marker;
-  marker.header.frame_id = "chassis";
+  marker.header.frame_id = shooter_frame_;
   marker.header.stamp = this->now();
   marker.ns = "hit_yaw";
   marker.id = 0;
   marker.type = visualization_msgs::msg::Marker::ARROW;
   marker.action = visualization_msgs::msg::Marker::ADD;
-  marker.pose.position.x = 0;
-  marker.pose.position.y = 0;
-  marker.pose.position.z = -offset_z_;
   tf2::Quaternion q;
   q.setRPY(0, hit_pitch, hit_yaw);
   marker.pose.orientation = tf2::toMsg(q);
   marker.scale.x = 5.0;
-  marker.scale.y = 0.02;
-  marker.scale.z = 0.02;
+  marker.scale.y = 0.01;
+  marker.scale.z = 0.01;
   marker.color.a = 1.0;
   marker.color.r = 1.0;
   marker.color.g = 0.0;
