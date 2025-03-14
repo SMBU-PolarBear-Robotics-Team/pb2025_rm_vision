@@ -33,6 +33,8 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     detector = LaunchConfiguration("detector")
     params_file = LaunchConfiguration("params_file")
+    use_hik_camera = LaunchConfiguration("use_hik_camera")
+    use_robot_state_pub = LaunchConfiguration("use_robot_state_pub")
     use_composition = LaunchConfiguration("use_composition")
     use_respawn = LaunchConfiguration("use_respawn")
     log_level = LaunchConfiguration("log_level")
@@ -68,6 +70,18 @@ def generate_launch_description():
         description="Full path to the ROS2 parameters file to use for all launched nodes",
     )
 
+    declare_use_hik_camera_cmd = DeclareLaunchArgument(
+        "use_hik_camera",
+        default_value="True",
+        description="Whether to bringup hik camera node",
+    )
+
+    declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
+        "use_robot_state_pub",
+        default_value="False",
+        description="Whether to start the robot state publisher",
+    )
+
     declare_use_composition_cmd = DeclareLaunchArgument(
         "use_composition",
         default_value="True",
@@ -101,10 +115,21 @@ def generate_launch_description():
             "use_sim_time": use_sim_time,
             "detector": detector,
             "params_file": params_file,
-            "use_hik_camera": "True",
+            "use_hik_camera": use_hik_camera,
             "use_composition": use_composition,
             "use_respawn": use_respawn,
             "log_level": log_level,
+        }.items(),
+    )
+
+    start_robot_state_publisher_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(launch_dir, "robot_state_publisher_launch.py")
+        ),
+        condition=IfCondition(use_robot_state_pub),
+        launch_arguments={
+            "namespace": namespace,
+            "use_sim_time": use_sim_time,
         }.items(),
     )
 
@@ -123,7 +148,9 @@ def generate_launch_description():
     # Declare the launch options
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_sim_time_cmd)
+    ld.add_action(declare_use_hik_camera_cmd)
     ld.add_action(declare_params_file_cmd)
+    ld.add_action(declare_use_robot_state_pub_cmd)
     ld.add_action(declare_detector_cmd)
     ld.add_action(declare_use_composition_cmd)
     ld.add_action(declare_rviz_config_file_cmd)
@@ -133,6 +160,7 @@ def generate_launch_description():
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(bringup_cmd)
+    ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(rviz_cmd)
 
     return ld
