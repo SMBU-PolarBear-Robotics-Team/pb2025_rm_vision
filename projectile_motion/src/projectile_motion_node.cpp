@@ -191,8 +191,8 @@ void ProjectileMotionNode::calculateTargetPosition(
   target_pitch = -target_pitch;
   target_yaw = std::atan2(target_predict_position.y(), target_predict_position.x());
 
-  hit_yaw = target_yaw - cur_yaw_;
-  hit_pitch = target_pitch - cur_pitch_;
+  hit_yaw = target_yaw;
+  hit_pitch = target_pitch;
 
   publishHitYawMarker(hit_yaw, hit_pitch);
 }
@@ -217,7 +217,7 @@ void ProjectileMotionNode::publishGimbalCommand(double hit_pitch, double hit_yaw
 void ProjectileMotionNode::publishHitYawMarker(double hit_yaw, double hit_pitch)
 {
   visualization_msgs::msg::Marker marker;
-  marker.header.frame_id = shooter_frame_;
+  marker.header.frame_id = "gimbal_pitch_odom";
   marker.header.stamp = this->now();
   marker.ns = "hit_yaw";
   marker.id = 0;
